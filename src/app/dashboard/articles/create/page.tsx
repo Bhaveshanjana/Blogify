@@ -1,4 +1,4 @@
-import CreateArticles from "@/components/articles/CreateArticles";
+import CreateArticles from "@/components/articles/CreateArticlesPage";
 import React from "react";
 
 const page = () => {

@@ -29,7 +29,7 @@ model Articles {
   id            String    @id @default(cuid())
   title         String
   content       String
-  catrgory      String
+  category      String
   featuredImage String
   author        User      @relation(fields: [authorId], references: [id])
   authorId      String
