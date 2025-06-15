@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useActionState, useTransition } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import {
@@ -11,8 +13,26 @@ import {
 } from "../ui/table";
 import { Badge } from "../ui/badge";
 import Link from "next/link";
+import { Prisma } from "@/generated/prisma";
+import { useFormStatus } from "react-dom";
+import { DeleteArticle } from "@/actions/DeleteArticle";
 
-const RecentArticles = () => {
+type RecentArticlesProps = {
+  articles: Prisma.ArticlesGetPayload<{
+    include: {
+      coments: true;
+      author: {
+        select: {
+          name: true;
+          email: true;
+          imageUrl: true;
+        };
+      };
+    };
+  }>[];
+};
+
+const RecentArticles: React.FC<RecentArticlesProps> = ({ articles }) => {
   return (
     <Card className="mb-8">
       <CardHeader>
@@ -23,58 +43,72 @@ const RecentArticles = () => {
           </Button>
         </div>
       </CardHeader>
+      {!articles.length ? (
+        <CardContent>No articles Found</CardContent>
+      ) : (
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Title</TableHead>
+                <TableHead> Status</TableHead>
+                <TableHead> Comments</TableHead>
+                <TableHead> Date</TableHead>
+                <TableHead> Actions</TableHead>
+              </TableRow>
+            </TableHeader>
 
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead> Status</TableHead>
-              <TableHead> Comments</TableHead>
-              <TableHead> Date</TableHead>
-              <TableHead> Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody>
-            <TableRow>
-              <TableCell>title</TableCell>
-              <TableCell>
-                <Badge
-                  variant={"secondary"}
-                  className="rounded-full bg-green-100 text-green-800"
-                >
-                  Published
-                </Badge>
-              </TableCell>
-              <TableCell>2</TableCell>
-              <TableCell>12 feb</TableCell>
-              <TableCell>
-                <div className="flex gap-2">
-                  <Link href={`/dashboard/article/${123}/edit`}>
-                    <Button variant={"ghost"} size="sm">
-                      Edit
-                    </Button>
-                  </Link>
-                  <DeleteButton />
-                </div>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </CardContent>
+            <TableBody>
+              {articles.map((article) => (
+                <TableRow key={article.id}>
+                  <TableCell>{article.title}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={"secondary"}
+                      className="rounded-full bg-green-100 text-green-800"
+                    >
+                      Published
+                    </Badge>
+                  </TableCell>
+                  <TableCell>{article?.coments.length}</TableCell>
+                  <TableCell>{article.createAt.toDateString()}</TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Link href={`/dashboard/articles/${article.id}/edit`}>
+                        <Button variant={"ghost"} size="sm">
+                          Edit
+                        </Button>
+                      </Link>
+                      <DeleteButton articleId={article.id} />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      )}
     </Card>
   );
 };
 
 export default RecentArticles;
 
-const DeleteButton = () => {
+type DeleteButtonProps = {
+  articleId: string;
+};
+const DeleteButton: React.FC<DeleteButtonProps> = ({ articleId }) => {
+  const [isPending, startTransition] = useTransition();
   return (
-    <form>
-      <Button variant={"ghost"} size={"sm"} type="submit">
-        {" "}
-        Delete
+    <form
+      action={() => {
+        startTransition(async () => {
+          await DeleteArticle(articleId);
+        });
+      }}
+    >
+      <Button disabled={isPending} variant={"ghost"} size={"sm"} type="submit">
+        {isPending ? "Loading..." : "Delete"}
       </Button>
     </form>
   );
