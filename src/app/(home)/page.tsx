@@ -1,7 +1,7 @@
 import NavBar from "@/components/home/header/NavBar";
 import Hero from "@/components/home/Hero";
 import TopArticles from "@/components/home/TopArticles";
-import React from "react";
+import React, { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BlogFooter } from "@/components/home/Blog";
@@ -21,8 +21,9 @@ const page = () => {
               Discover our most popular and trending content
             </p>
           </div>
-
-          <TopArticles />
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <TopArticles />
+          </Suspense>
           <div className="mt-12 text-center">
             <Link href={"/articles"}>
               <Button
