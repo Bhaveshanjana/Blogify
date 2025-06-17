@@ -13,7 +13,7 @@ const DashBoardBlog = async () => {
         createAt: "desc",
       },
       include: {
-        coments: true, //i dont change it to -> "comment"
+        coments: true, //typo error but i didn't change it to -> "comment"
         author: {
           select: {
             name: true,
@@ -45,7 +45,7 @@ const DashBoardBlog = async () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y- pb-2">
             <CardTitle className="font-medium text-sm">
-              Totol Articles
+              Total Articles
             </CardTitle>
             <FileText className="h-4 w-4" />
           </CardHeader>
@@ -60,7 +60,7 @@ const DashBoardBlog = async () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y- pb-2">
             <CardTitle className="font-medium text-sm">
-              Totol Comments
+              Total Comments
             </CardTitle>
             <MessageCircle className="h-4 w-4" />
           </CardHeader>

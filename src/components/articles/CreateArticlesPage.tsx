@@ -56,7 +56,7 @@ const CreateArticlesPage = () => {
                 <select
                   name="category"
                   id="category"
-                  className="flex h-10 w-full rounded-md border border-input bg-[#2d33346c] transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+                  className="flex h-10 w-full rounded-md border border-input bg-white dark:bg-[#2d33346c] transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
                 >
                   <option value="" className="dark:bg-gray-600">
                     Select category

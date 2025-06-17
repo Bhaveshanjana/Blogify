@@ -5,6 +5,7 @@ import React, { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BlogFooter } from "@/components/home/Blog";
+import { ArticlesPageSkeleton } from "../articles/page";
 
 const page = () => {
   return (
@@ -21,7 +22,7 @@ const page = () => {
               Discover our most popular and trending content
             </p>
           </div>
-          <Suspense fallback={<h1>Loading...</h1>}>
+          <Suspense fallback={<ArticlesPageSkeleton/>}>
             <TopArticles />
           </Suspense>
           <div className="mt-12 text-center">
