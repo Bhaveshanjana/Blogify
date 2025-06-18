@@ -14,7 +14,6 @@ import {
   SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/server";
 
 const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -43,13 +42,13 @@ const NavBar = () => {
               Articles
             </Link>
             <Link
-              href="/tutorial"
+              href="#tutorial"
               className="text-sm md:text-lg font-medium text-foreground transition-colors hover:text-foreground"
             >
               Tutorial
             </Link>
             <Link
-              href="/about"
+              href="#about"
               className="text-sm md:text-lg font-medium text-foreground transition-colors hover:text-foreground"
             >
               About
@@ -146,18 +145,14 @@ const NavBar = () => {
             </Link>
           </div>
           {/* Mobile Auth Buttons */}
-          {/* <SignedOut> */}
+
           <div className="px-4 flex flex-col gap-2">
             {/* <SignInButton> */}
             <Button variant="outline" className="w-full">
               Login
             </Button>
-            {/* </SignInButton>
-                <SignUpButton> */}
             <Button className="w-full">Sign up</Button>
-            {/* </SignUpButton> */}
           </div>
-          {/* </SignedOut> */}
         </div>
       )}
     </div>

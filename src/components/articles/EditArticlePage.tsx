@@ -14,7 +14,6 @@ import "react-quill-new/dist/quill.snow.css";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 import { Button } from "@/components/ui/button";
-import { CreateArticles } from "@/actions/CreateArticle";
 import type { Articles } from "@/generated/prisma";
 import { useRouter } from "next/navigation";
 import { EditArticles } from "@/actions/EditArticle";

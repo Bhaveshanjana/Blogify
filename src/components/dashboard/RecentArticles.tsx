@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useActionState, useTransition } from "react";
+import React, { useTransition } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import {
@@ -14,7 +14,6 @@ import {
 import { Badge } from "../ui/badge";
 import Link from "next/link";
 import { Prisma } from "@/generated/prisma";
-import { useFormStatus } from "react-dom";
 import { DeleteArticle } from "@/actions/DeleteArticle";
 
 type RecentArticlesProps = {
@@ -38,7 +37,11 @@ const RecentArticles: React.FC<RecentArticlesProps> = ({ articles }) => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>Recent Articles</CardTitle>
-          <Button className="text-muted-foreground" size="sm" variant={"ghost"}>
+          <Button
+            className="text-muted-foreground cursor-pointer"
+            size="sm"
+            variant={"ghost"}
+          >
             View All →
           </Button>
         </div>
@@ -75,7 +78,11 @@ const RecentArticles: React.FC<RecentArticlesProps> = ({ articles }) => {
                   <TableCell>
                     <div className="flex gap-2">
                       <Link href={`/dashboard/articles/${article.id}/edit`}>
-                        <Button variant={"ghost"} size="sm">
+                        <Button
+                          variant={"ghost"}
+                          size="sm"
+                          className="cursor-pointer"
+                        >
                           Edit
                         </Button>
                       </Link>
@@ -107,7 +114,13 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ articleId }) => {
         });
       }}
     >
-      <Button disabled={isPending} variant={"ghost"} size={"sm"} type="submit">
+      <Button
+        disabled={isPending}
+        variant={"ghost"}
+        size={"sm"}
+        type="submit"
+        className="cursor-pointer"
+      >
         {isPending ? "Loading..." : "Delete"}
       </Button>
     </form>

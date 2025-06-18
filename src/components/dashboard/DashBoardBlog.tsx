@@ -33,56 +33,41 @@ const DashBoardBlog = async () => {
           <p>Manage your content and analytics</p>
         </div>
         <Link href="/dashboard/articles/create">
-          <Button>
+          <Button className="cursor-pointer">
             <PlusCircle className="h-4 w-4" />
             New Article
           </Button>
         </Link>
       </div>
       {/* Quick stats */}
-      <div className="grid md:grid-cols-3 gap-4 mb-8">
+      <div className="grid md:grid-cols-2 gap-4 mb-8">
         {/* Card 01 */}
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y- pb-2">
-            <CardTitle className="font-medium text-sm">
+          <CardHeader className="flex flex-row items-center justify-between  pb-2">
+            <CardTitle className="font-medium md:text-lg">
               Total Articles
             </CardTitle>
-            <FileText className="h-4 w-4" />
+            <FileText className="h-6  w-6" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{articles.length}</div>
+            <div className="text-2xl font-bold ">{articles.length}</div>
             <p className="text-sm text-muted-foreground mt-1">
-              +5 from last month
+              +{articles.length} from last month
             </p>
           </CardContent>
         </Card>
         {/* Card 02 */}
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y- pb-2">
-            <CardTitle className="font-medium text-sm">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="font-medium md:text-lg">
               Total Comments
             </CardTitle>
-            <MessageCircle className="h-4 w-4" />
+            <MessageCircle className="h-6 w-6" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalComments}</div>
+            <div className="text-2xl font-bold ">{totalComments}</div>
             <p className="text-sm text-muted-foreground mt-1">
-              12 awaiting moderation
-            </p>
-          </CardContent>
-        </Card>
-        {/* Card 03 */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y- pb-2">
-            <CardTitle className="font-medium text-sm">
-              Ang. Rating Time
-            </CardTitle>
-            <Clock className="h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">4.2</div>
-            <p className="text-sm text-muted-foreground mt-1">
-              0.6 from last month
+              +{totalComments} awaiting moderation
             </p>
           </CardContent>
         </Card>

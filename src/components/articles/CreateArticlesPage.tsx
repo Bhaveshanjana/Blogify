@@ -14,20 +14,23 @@ import "react-quill-new/dist/quill.snow.css";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 import { Button } from "@/components/ui/button";
-import { CreateArticles } from '@/actions/CreateArticle'
+import { CreateArticles } from "@/actions/CreateArticle";
 
 const CreateArticlesPage = () => {
   const [content, setContent] = useState("");
   const [formState, action, isPending] = useActionState(CreateArticles, {
     errors: {},
   });
-
+  console.log("Raw content:", content);
   // sending content because of conetnt strored in state and we use reactquill
-  const handleFormData = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleFormData = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
-    formData.append("content", content);
+    // removing br tag before sending
+    const cleanedContent = content === "<p><br></p>" ? "" : content;
+
+    const formData = new FormData(event.currentTarget);
+    formData.append("content", cleanedContent);
 
     startTransition(() => {
       action(formData);
@@ -49,7 +52,9 @@ const CreateArticlesPage = () => {
                 placeholder="Enter an Article title"
               />
               {formState.errors.title && (
-                <span className="text-red-600">{formState.errors.title}</span>
+                <span className="text-red-600 text-center bg-gray-800 inline-block w-full rounded-sm">
+                  Please provide an vaild title
+                </span>
               )}
               <div className="space-y-2">
                 <Label>Category</Label>
@@ -72,8 +77,8 @@ const CreateArticlesPage = () => {
                   </option>
                 </select>
                 {formState.errors.category && (
-                  <span className="text-red-600">
-                    {formState.errors.category}
+                  <span className="text-red-600 bg-gray-800 inline-block w-full text-center rounded-sm">
+                    Plese provide an vaild category
                   </span>
                 )}
               </div>
@@ -85,16 +90,32 @@ const CreateArticlesPage = () => {
                   name="featuredImage"
                   accept="image/*"
                 />
-              </div>
-              <div className="space-y-2">
-                <Label>Content </Label>
-                <ReactQuill theme="snow" value={content} onChange={setContent} />
-                {formState.errors.content && (
-                  <span className="text-red-600">
-                    {formState.errors.content}
+                {formState.errors.featuredImage && (
+                  <span className="font-medium text-sm text-red-500 text-center bg-gray-800 inline-block w-full rounded-sm mt-2">
+                    Please provide an image
                   </span>
                 )}
               </div>
+              <div className="space-y-2">
+                <Label>Content </Label>
+                <ReactQuill
+                  theme="snow"
+                  value={content}
+                  onChange={setContent}
+                />
+                {formState.errors.content && (
+                  <span className="text-red-600 dark:bg-gray-800 inline-block w-full rounded-sm text-center">
+                    Please provide an vaild content
+                  </span>
+                )}
+              </div>
+              {formState.errors.formError && (
+                <div className="dark:bg-transparent bg-red-100 p-2 border border-red-600">
+                  <span className="font-medium text-sm text-red-500">
+                    {formState.errors.formError}
+                  </span>
+                </div>
+              )}
               <div className="flex justify-end gap-4">
                 <Button variant={"outline"}>Cancel</Button>
                 <Button type="submit" disabled={isPending}>

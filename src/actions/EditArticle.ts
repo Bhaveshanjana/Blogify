@@ -75,9 +75,7 @@ export const EditArticles = async (
   if (!existingUser || existingArticle.authorId !== existingUser?.id) {
     return {
       errors: {
-        formError: [
-          "You are not authorized to edit this article",
-        ],
+        formError: ["You are not authorized to edit this article"],
       },
     };
   }

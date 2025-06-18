@@ -17,7 +17,7 @@ cloudinary.config({
 const CreateArticlesSchema = z.object({
   title: z.string().min(3).max(100),
   category: z.string().min(2).max(50),
-  content: z.string().min(10),
+  content: z.string().min(10).max(1000),
 });
 
 type ArticleFromState = {
@@ -55,12 +55,12 @@ export const CreateArticles = async (
     };
   }
 
-  const existingUser  = await prisma.user.findUnique({
+  const existingUser = await prisma.user.findUnique({
     where: {
       clerkUserId: userId,
     },
   });
-  if (!existingUser ) {
+  if (!existingUser) {
     return {
       errors: {
         formError: [

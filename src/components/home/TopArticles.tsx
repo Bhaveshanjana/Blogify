@@ -3,7 +3,7 @@ import { Card } from "../ui/card";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { prisma } from "./../../lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 const TopArticles = async () => {
   const articlesData = await prisma.articles.findMany({
@@ -31,13 +31,13 @@ const TopArticles = async () => {
             "bg-white/50 dark:bg-gray-900/50 backdrop-blur-lg"
           )}
         >
-          <div className="p-6">
+          <div className="p-3">
             <Link href={`/articles/${article.id}`}>
               <div className="relative mb-4 h-48 w-full overflow-hidden rounded-xl">
                 <img
                   src={article.featuredImage}
                   alt="tree.png"
-                  className="object-cover"
+                  className="object-cover w-full h-full"
                 />
               </div>
               {/* avatar */}

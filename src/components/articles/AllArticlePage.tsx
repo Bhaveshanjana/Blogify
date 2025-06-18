@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { fetchArticle } from "@/lib/query/fetcharticle";
 import { Search } from "lucide-react";
+import Link from "next/link";
 
 type ArticleProps = {
   searchText: string;
@@ -17,34 +18,36 @@ const AllArticlePage: React.FC<ArticleProps> = async ({ searchText }) => {
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {articles.map((articl) => (
-        <Card
-          key={articl.id}
-          className="group relative overflow-hidden translate-all hover:shadow-lg"
-        >
-          <div className="p-3">
-            <div className="relative mb-4 h-52 w-full overflow-hidden rounded-xl">
-              <Image
-                alt="blogImage"
-                className="object-cover"
-                fill
-                src={articl.featuredImage}
-              />
-            </div>
-            {/* Article content */}
-            <h3 className="text-xl font-semibold">{articl.title}</h3>
-            <p className="mt-2">{articl.category}</p>
-            <div className="mt-6 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Avatar>
-                  <AvatarImage src={articl.author.imageUrl || ""} />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <span className="text-sm">{articl.author.name}</span>{" "}
+        <Link href={`/articles/${articl.id}`}>
+          <Card
+            key={articl.id}
+            className="group relative overflow-hidden translate-all hover:shadow-lg"
+          >
+            <div className="p-3">
+              <div className="relative mb-4 h-52 w-full overflow-hidden rounded-xl">
+                <Image
+                  alt="blogImage"
+                  className="object-cover"
+                  fill
+                  src={articl.featuredImage}
+                />
               </div>
-              <div className="text-sm">{articl.createAt.toDateString()}</div>{" "}
+              {/* Article content */}
+              <h3 className="text-xl font-semibold">{articl.title}</h3>
+              <p className="mt-2 text-lg">{articl.category}</p>
+              <div className="mt-3 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Avatar>
+                    <AvatarImage src={articl.author.imageUrl || ""} />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <span className="text-sm">{articl.author.name}</span>{" "}
+                </div>
+                <div className="text-sm">{articl.createAt.toDateString()}</div>{" "}
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </Link>
       ))}
     </div>
   );

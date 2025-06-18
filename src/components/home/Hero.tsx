@@ -1,8 +1,12 @@
+"use client";
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const router = useRouter();
   return (
     <section className="relative min-h-[650px] w-full overflow-hidden bg-gradient-to-br from-purple-600 via-indigo-950 to-indigo-950">
       <div className="max-w-7xl relative mx-auto flex h-full flex-col items-center justify-center px-4  py-24 md:flex-row md:py-32">
@@ -19,8 +23,16 @@ const Hero = () => {
             perespectives on technology, lifestyle and innovation{" "}
           </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row md:justify-start">
-            <Button className="rounded-full">Start Reading</Button>
-            <Button className="rounded-full" variant={"outline"}>
+            <Button
+              onClick={() => router.push("/articles")}
+              className="rounded-full cursor-pointer"
+            >
+              Start Reading
+            </Button>
+            <Button
+              className="rounded-full cursor-pointer "
+              variant={"outline"}
+            >
               Explore Topics
             </Button>
           </div>
