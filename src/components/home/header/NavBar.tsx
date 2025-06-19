@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import SearchInput from "./SearchInput";
 import ToggleMode from "./ToggleMode";
 import { Menu, Search, X } from "lucide-react";
@@ -63,7 +63,9 @@ const NavBar = () => {
 
           {/* Right Section */}
           <div className="flex items-center gap-2">
-            <SearchInput />
+            <Suspense>
+              <SearchInput />
+            </Suspense>
             <ToggleMode />
 
             {/* user actions */}
