@@ -1,10 +1,12 @@
 import CreateArticles from "@/components/articles/CreateArticlesPage";
-import React from "react";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
     <div>
-      <CreateArticles />
+      <Suspense>
+        <CreateArticles />
+      </Suspense>
     </div>
   );
 };
